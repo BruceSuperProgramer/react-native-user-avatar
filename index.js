@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {View, Image, Text} from 'react-native';
-import initials from 'initials';
+import React from "react";
+import PropTypes from "prop-types";
+import { View, Image, Text } from "react-native";
+import initials from "initials";
 
 // from https://flatuicolors.com/
 const defaultColors = [
-  '#2ecc71', // emerald
-  '#3498db', // peter river
-  '#8e44ad', // wisteria
-  '#e67e22', // carrot
-  '#e74c3c', // alizarin
-  '#1abc9c', // turquoise
-  '#2c3e50', // midnight blue
+  "#2ecc71", // emerald
+  "#3498db", // peter river
+  "#8e44ad", // wisteria
+  "#e67e22", // carrot
+  "#e74c3c", // alizarin
+  "#1abc9c", // turquoise
+  "#2c3e50", // midnight blue
 ];
 
 /**
@@ -42,18 +42,19 @@ class UserAvatar extends React.PureComponent {
       src,
       name,
       color,
-      textColor = '#fff',
+      textColor = "#fff",
       colors = defaultColors,
       size = 32,
       imageStyle,
       defaultName,
       borderRadius,
       style,
+      customTextStyle,
     } = this.props;
-    if (!name && !src) throw new Error('Avatar requires a name or source');
-    if (typeof size !== 'number') size = parseInt(size);
+    if (!name && !src) throw new Error("Avatar requires a name or source");
+    if (typeof size !== "number") size = parseInt(size);
     let abbr = initials(name);
-    if (name.startsWith('+')) {
+    if (name.startsWith("+")) {
       abbr = `+${abbr}`;
     }
     if (!abbr) abbr = defaultName;
@@ -66,9 +67,9 @@ class UserAvatar extends React.PureComponent {
     const localStyle = {
       borderRadius,
       borderWidth: 1,
-      borderColor: 'transparent',
-      justifyContent: 'center',
-      alignItems: 'center',
+      borderColor: "transparent",
+      justifyContent: "center",
+      alignItems: "center",
     };
     const containerStyle = {
       height: size,
@@ -83,7 +84,7 @@ class UserAvatar extends React.PureComponent {
       };
       const props = {
         style: [imageLocalStyle, sizeStyle, imageStyle],
-        source: {uri: src},
+        source: { uri: src },
       };
       inner = React.createElement(this.props.component || Image, props);
     } else {
@@ -95,11 +96,11 @@ class UserAvatar extends React.PureComponent {
         const i = sumChars(name) % colors.length;
         background = colors[i];
       }
-      colorStyle = {backgroundColor: background};
+      colorStyle = { backgroundColor: background };
       const textContainerStyle = {
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
         marginTop: -(size / 20),
       };
       const sizeStyle = {
@@ -109,10 +110,13 @@ class UserAvatar extends React.PureComponent {
       inner = (
         <View style={[textContainerStyle, sizeStyle]}>
           <Text
-            style={{
-              color: textColor,
-              fontSize: size / 2.5,
-            }}
+            style={[
+              {
+                color: textColor,
+                fontSize: size / 2.5,
+              },
+              customTextStyle,
+            ]}
             adjustsFontSizeToFit={true}
           >
             {abbr}
